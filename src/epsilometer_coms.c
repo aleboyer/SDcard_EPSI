@@ -63,21 +63,27 @@ void USART1_TX_IRQHandler(void)
 {
 //TODO change to state machine
 	dataLen = pendingSamples*byteSample-txSentBytes;
+
 	switch (dataLen){
 		case 0:
 			USART_IntDisable(USART1, USART_IEN_TXBL);
+			GPIO_PinModeSet(gpioPortA, 14, gpioModePushPull, 1); //
 			USART_Tx(USART1, 0x1e);
+			GPIO_PinModeSet(gpioPortA, 14, gpioModePushPull, 0); //
+
 			break;
 		case 1:
 			USART_Tx(USART1, dataBuffer[txSentBytes % bufferSize]);
 			txSentBytes++;
 			break;
 		default:
+		    GPIO_PinModeSet(gpioPortA, 13, gpioModePushPull, 1); //
 			for(int i=0;i<2;i++){
 				/* Transmit pending character */
 				USART_Tx(USART1, dataBuffer[txSentBytes % bufferSize]);
 				txSentBytes++;
 			}
+		    GPIO_PinModeSet(gpioPortA, 13, gpioModePushPull, 0); //
 			break;
 	}
 

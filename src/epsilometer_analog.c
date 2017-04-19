@@ -429,7 +429,6 @@ void GPIO_ODD_IRQHandler(void) {
 	if (boardSetup_ptr->timeStampFlag){
 // TODO define a real time stamp
 		uint32_t timeStamp = RTC->CNT;
-        uint8_t timeStamp_ptr;
 		//for (int i=0;i<4;i++){
 		//	dataBuffer[(pendingSamples*byteSample+(boardSetup_ptr->numSensor-1)*3+i+1) % bufferSize] =  timeStamp_ptr[i];
 		//}
@@ -444,7 +443,8 @@ void GPIO_ODD_IRQHandler(void) {
 	AD7124_ChipSelect(sensors[0], LLO); // Select Master to Monitor DRDY pin
 
 	// enable the TX interrupt based on the buffer level
-	//USART_IntEnable(USART1, UART_IEN_TXBL);
+	//GPIO_PinModeSet(gpioPortA, 13, gpioModePushPull, 1); //
+	USART_IntEnable(USART1, UART_IEN_TXBL);
 
 //TODO stream out the data ?
 	// streamData(pendingsample)

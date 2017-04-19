@@ -71,8 +71,8 @@ FIL fsrc;					// File objects
 /**   define global external values  **********************************************/
 /*************************************************************************/
 
-uint32_t byteSample;        // number of bytes per Sample
-uint32_t bufferSize;        // numChannel*maxSamples
+volatile int32_t byteSample;        // number of bytes per Sample
+volatile uint32_t bufferSize;        // numChannel*maxSamples
 
 /*************************************************************************/
 /* define circular buffer for the samples.
@@ -83,10 +83,12 @@ uint32_t bufferSize;        // numChannel*maxSamples
 /*************************************************************************/
 
 //volatile uint8_t * dataBuffer;
-uint8_t * dataBuffer;
+volatile uint8_t * dataBuffer;
 volatile uint8_t * channelSample;
-extern volatile uint32_t pendingSamples; // counter for samples gathered from the ADC
-extern volatile uint32_t txSentBytes;
+//extern volatile uint32_t pendingSamples; // counter for samples gathered from the ADC
+//extern volatile uint32_t txSentBytes;
+volatile uint32_t pendingSamples; // counter for samples gathered from the ADC
+volatile uint32_t txSentBytes;
 volatile uint32_t SDblock;              // counter in the foreground SD
 volatile uint32_t flagSync;              // flag to reset pending sample in the interrupt.
 extern epsiSetupPtr boardSetup_ptr;

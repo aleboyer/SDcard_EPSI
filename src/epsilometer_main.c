@@ -27,12 +27,6 @@
 #include "em_chip.h"
 #include "em_rtc.h"
 
-
-/* SD card library */
-#include "microsd.h"
-#include "ff.h"
-#include "diskio.h"
-
 /* SD card library */
 #include "microsd.h"
 #include "ff.h"
@@ -133,17 +127,17 @@ int main(void) {
 	#endif
 
 	initSD();
-	//fsrc=initSD();
 
 	// initialize the TX state (epsilometer_coms),
 	// start conversion: send SYNC signal and enable the sampling interrupt
+	res = f_open(&fsrc, filename, FA_OPEN_APPEND | FA_WRITE);
+	uint8_t flag_sync = 0;
+
 	AD7124_StartConversion(sensors[0]);
 
 	/****************************************************************
 	 * Primitive Sampling routine
 	 ****************************************************************/
-	res = f_open(&fsrc, filename, FA_OPEN_APPEND | FA_WRITE);
-	uint8_t flag_sync = 0;
 	while (1) {
 		if((pendingSamples % 80 ==0) & (pendingSamples>=160)){
 			writeSD();
