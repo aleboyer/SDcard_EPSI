@@ -8,13 +8,21 @@
 /*local library */
 #include "ep_SDcard.h"
 
+/******************************************************************************
+ * @name initSD
+ * @brief
+ *  initialize SD card
+ * @details
+ *	initialize the SD mode: USART2, GPIO route etc
+ *	mount the SD driver (FatFS layer)
+ *	define a filename in ANSI code
+ *	write a header (to be define)
+ *
+ *
+ * @Author A. Le Boyer
+ *****************************************************************************/
 
-
-/****************************************************************
- * initialize SD card
- * ***************************************************************/
 void initSD(void){
-//FIL initSD(void){
 
 	MICROSD_Init(); //Initialize MicroSD driver
 
@@ -33,7 +41,6 @@ void initSD(void){
 
 	// Initialize filesystem
 	//TCHAR * filename = _T("ep_test.bin"); //TCHAR is only use for the filename and the drive name;
-
 	TCHAR * drive    = _T("0:");
 	char buf[1024];
 	strncpy (buf, FILENAME, 256);
@@ -46,12 +53,15 @@ void initSD(void){
 	char * header2bin = "Start Data:"; // char * allow to initialize string
 	char * cr="\n";
 
-    static int cur_min = -1, cur_sec = -1;
-	struct tm tsplt;
 
+	// local time
+	//TODO check out local time and sync the board time with user time
+	static int cur_min = -1, cur_sec = -1;
+	struct tm tsplt;
 	time_t t = time(NULL);
     localtime_r (&t, &tsplt);
 
+    // filename stuff
     int idx;
     for (idx = 0; idx < strlen (buf); ++idx){
     	filename[idx] = ff_convert (buf[idx], 1);
@@ -61,10 +71,7 @@ void initSD(void){
 
     if (tsplt.tm_min != cur_min) // check if time is different
     {
-
     	if (res == FR_OK) f_close (&fsrc);
-
-
     	// Open  the file for write
 		res = f_open(&fsrc, filename, FA_OPEN_ALWAYS | FA_WRITE | FA_CREATE_NEW);
 		cur_min = tsplt.tm_min;
@@ -82,6 +89,7 @@ void initSD(void){
         }
     }
     SDwritten = 0;
+    // write the header on the SD
     f_write(&fsrc, header2bin,strlen(header2bin), &SDwritten);
     SDwritten = 0;
     f_write(&fsrc, cr,1, &SDwritten);
@@ -89,10 +97,20 @@ void initSD(void){
 
 }
 
+/******************************************************************************
+ * @name writeSD
+ * @brief
+ *  write a block on the SD card
+ * @details
+ *	check the hard coded values
+ *
+ * @Author A. Le Boyer
+ *****************************************************************************/
+
 void writeSD(){
 	SDwritten = 0;
-
-    f_write(&fsrc, dataBuffer+(2240*(SDblock%4) % bufferSize),2240, &SDwritten);
+//TODO change the hard coded values (2240 and 4) into variable
+    f_write(&fsrc, dataBuffer+(2240*(sd_block%4) % buffer_size),2240, &SDwritten);
 
 }
 

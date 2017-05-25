@@ -9,6 +9,15 @@
 #include "ep_GPIO_init.h"
 #include "ep_analog.h"
 
+/******************************************************************************
+ * @name init_GPIO
+ * @brief
+ *   Switch on some GPIO
+ * @details
+ * Switch on the parts of MADRE, mainly the ADC
+ *
+ * @Author A. Le Boyer
+ *****************************************************************************/
 
 void init_GPIO(void) {
 	GPIO_PinModeSet(gpioPortE, 13, gpioModePushPull, 1); // Enable Analog power

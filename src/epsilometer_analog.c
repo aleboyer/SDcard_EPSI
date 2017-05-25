@@ -61,21 +61,60 @@ static const uint32_t bitFieldLookup[8] = {
 		0x000000FF}
 ;
 
-
+/******************************************************************************
+ * @name Create_Mask
+ * @brief
+ *
+ *
+ * @details
+ *
+ *
+ * @Author S. Lastuka
+ *****************************************************************************/
 uint32_t Create_Mask(uint32_t nbits, uint32_t start_pos) {
 	return bitFieldLookup[nbits] << start_pos;
 }
 
+/******************************************************************************
+ * @name Data_Bit_Shift
+ * @brief
+ *
+ *
+ * @details
+ *
+ *
+ * @Author S. Lastuka
+ *****************************************************************************/
 uint32_t Data_Bit_Shift(uint32_t data, uint32_t start_pos) {
 	return data << start_pos;
 }
 
+/******************************************************************************
+ * @name Merge_Bits
+ * @brief
+ *
+ *
+ * @details
+ *
+ *
+ * @Author S. Lastuka
+ *****************************************************************************/
 // Register Bit Setting Routine
 // data needs to be left shifted to start position
 uint32_t Merge_Bits(uint32_t reg, uint32_t data, uint32_t mask) {
 	return reg ^ ((reg ^ data) & mask);
 }
 
+/******************************************************************************
+ * @name Set_Value_16Bit_Register
+ * @brief
+ *
+ *
+ * @details
+ *
+ *
+ * @Author S. Lastuka
+ *****************************************************************************/
 // Register Bit Setting Routine
 void Set_Value_16Bit_Register(uint16_t* reg, uint16_t value, uint16_t nbits, uint16_t start_pos)
 {
@@ -91,6 +130,16 @@ void Set_Value_16Bit_Register(uint16_t* reg, uint16_t value, uint16_t nbits, uin
 
 
 
+/******************************************************************************
+ * @name define_ADC_configuration
+ * @brief
+ * 		configure the register of the ADC
+ *
+ * @details
+ *
+ *
+ * @Author S. Lastuka
+ *****************************************************************************/
 void define_ADC_configuration(void){
 
 
@@ -108,6 +157,7 @@ void define_ADC_configuration(void){
 	Set_Value_16Bit_Register(&COMMON_SETUP.ADC_CONTROL, AD7124_CTRL_REF_EN_ENABLE, AD7124_CTRL_REF_EN_NUM_BITS, AD7124_CTRL_REF_EN_START_POSITION);
 	Set_Value_16Bit_Register(&COMMON_SETUP.ADC_CONTROL, AD7124_CTRL_CLKSEL_EXT, AD7124_CTRL_CLKSEL_NUM_BITS, AD7124_CTRL_CLKSEL_START_POSITION);
 
+	//TODO change to a Common parameter
 	COMMON_SETUP.FILTER_0 = 0x06001E; // 0x1E for 640hz on sinc4 filter
 	//COMMON_SETUP.FILTER_0 = 0x06003C; // 0x3C for 320hz on sinc4 filter
 
@@ -332,7 +382,7 @@ void SPI_xfer (uint8_t* writeBuffer, uint8_t* readBuffer, int bytesOut, int byte
  * @return void
  * Note: Likely written by leumas64. Why MISO =GPIO PE6 and!!! GPIO PE9???
 *******************************************************************************/
-void SPI_Init() {
+void init_SPI() {
 
 	USART_InitSync_TypeDef init = USART_INITSYNC_DEFAULT;
 
@@ -345,7 +395,7 @@ void SPI_Init() {
 	  GPIO_PinModeSet(gpioPortE, 5,	gpioModePushPull, 1);  /* CLK */
 
 	  /* Initialize USART in SPI master mode. */
-	  init.baudrate = boardSetup_ptr->spiBaudrate;			// baudRate defined in common.h
+	  init.baudrate = boardSetup_ptr->spi_baudrate;			// baudRate defined in common.h
 	  init.msbf     = true; 			// Analog devices is big enDian
 	  init.clockMode = usartClockMode3;
 	  USART_InitSync(USART0, &init);
@@ -402,52 +452,49 @@ void GPIO_ODD_IRQHandler(void) {
 
 	if(GPIO->IF != boardSetup_ptr->pinInterupt) return; //Interrupt on PE9
 
-	if (flagSync==1) pendingSamples=0; // had to re-synchronized the ADC
-
 	GPIO_IntDisable(boardSetup_ptr->pinInterupt);
 
 	/* Sample A/D in sequential order */
 
-	for( int i = 0; i < boardSetup_ptr->numSensor ; i++) {
+	//TODO the for loop will change i ll work on the user selection of ADC
+	for( int i = 0; i < boardSetup_ptr->number_sensor ; i++) {
 		// AD7124_GetRegisterValue return a uint32 result from the ADC register
 		AD7124_ChipSelect(sensors[i], LLO);
 		USART_SpiTransfer(USART0, cmdBuffer);
 		for(int ii = 0; ii < 3; ii++) {
-	//TODO check out endiannes when this
-			dataBuffer[(pendingSamples*byteSample+i*3+ii) % bufferSize] = USART_SpiTransfer(USART0, 0x0);
+			dataBuffer[(pendingSamples*byte_per_sample+i*3+ii) % buffer_size] = USART_SpiTransfer(USART0, 0x0);
 			if (i==4){
 				count=pendingSamples % 500;
 				count_ptr=(uint8_t*) &count;
 				// make a fake signal on shear 1
-				dataBuffer[(pendingSamples*byteSample+i*3+ii) % bufferSize] = count_ptr[2-ii];
+				dataBuffer[(pendingSamples*byte_per_sample+i*3+ii) % buffer_size] = count_ptr[2-ii];
 				//dataBuffer[(pendingSamples*byteSample+i*3+ii) % bufferSize] = 0xAA;
 			}
 		}//end for ii
 		AD7124_ChipSelect(sensors[i], LHI);
     }//end for
 
-	if (boardSetup_ptr->timeStampFlag){
+	if (boardSetup_ptr->timestamp_flag){
 // TODO define a real time stamp
 		uint32_t timeStamp = RTC->CNT;
 		//for (int i=0;i<4;i++){
 		//	dataBuffer[(pendingSamples*byteSample+(boardSetup_ptr->numSensor-1)*3+i+1) % bufferSize] =  timeStamp_ptr[i];
 		//}
-        dataBuffer[(pendingSamples*byteSample+(boardSetup_ptr->numSensor)*3+0) % bufferSize]= (timeStamp& 0x000000ff);
-        dataBuffer[(pendingSamples*byteSample+(boardSetup_ptr->numSensor)*3+1) % bufferSize]= (timeStamp& 0x0000ff00)>>8;
-        dataBuffer[(pendingSamples*byteSample+(boardSetup_ptr->numSensor)*3+2) % bufferSize]= (timeStamp& 0x00ff0000)>>16;
-        dataBuffer[(pendingSamples*byteSample+(boardSetup_ptr->numSensor)*3+3) % bufferSize]= (timeStamp& 0xff000000)>>24;
+        dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+0) % buffer_size]= (timeStamp& 0x000000ff);
+        dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+1) % buffer_size]= (timeStamp& 0x0000ff00)>>8;
+        dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+2) % buffer_size]= (timeStamp& 0x00ff0000)>>16;
+        dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+3) % buffer_size]= (timeStamp& 0xff000000)>>24;
 
 	}
 	pendingSamples++; // Increment number of samples available
 
+	//TODO change sensor[0] sensors[master].imply changes in epsilometer_menu.c
 	AD7124_ChipSelect(sensors[0], LLO); // Select Master to Monitor DRDY pin
 
 	// enable the TX interrupt based on the buffer level
-	//GPIO_PinModeSet(gpioPortA, 13, gpioModePushPull, 1); //
 	USART_IntEnable(USART1, UART_IEN_TXBL);
 
 //TODO stream out the data ?
-	// streamData(pendingsample)
 	GPIO_IntClear(boardSetup_ptr->pinInterupt);
 	GPIO_IntEnable(boardSetup_ptr->pinInterupt);
 

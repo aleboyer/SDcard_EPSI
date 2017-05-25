@@ -8,6 +8,19 @@
 
 #include "ep_TIMER_init.h"
 
+/******************************************************************************
+ * @name init_TIMER
+ * @brief
+ *  initialize TIMER0 and TIMER1
+ * @details
+ * TIMER0 is the Master clock used by the ADC, TIMER1 is a sync signal
+ * TIMER0 top is coreclock_cycle is the number of clock cycle that create our ADC Master clock
+ * TIMER0 CC2 is the number of cycle to wait before triggering TIMER1. we talk helf of the master clock to be as far as possible of the edge of the master clock
+ * TIMER1 top is long enough to let the ADC set up their clock
+ * @Author A. Le Boyer
+ *****************************************************************************/
+
+
 void init_TIMER(uint32_t coreclockCycle,uint32_t timer1PhaseShift){
 
 	//set up timer MCLOCK and SYNC

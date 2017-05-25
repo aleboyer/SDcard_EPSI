@@ -10,6 +10,20 @@
 
 volatile uint32_t gulclockset=0;
 
+/******************************************************************************
+ * @name CMU_IRQHandler
+ * @brief
+ *   enable the HF external Xal
+ * @details
+ *   interrupt enabling an external Xtal. first select the cristal HFXO,
+ *   then enable it.
+ *   IT IS EXTREMELY IMPORTANT TO SET BY HAND THE FREQUENCY OF THE NEW XTAL IN
+ *   CMSIS/EFM32WG/system_efm32wg.c #define EFM32_HFXO_FREQ (20000000UL).
+ *   I did not look for a way to make it user friendly :(
+ * @Author A. Le Boyer
+ *****************************************************************************/
+
+
 // CMU Interrupt Handler
 void CMU_IRQHandler(void)
 {
@@ -29,6 +43,18 @@ void CMU_IRQHandler(void)
         gulclockset = 1;
   }
 }
+
+/******************************************************************************
+ * @name init_CMU
+ * @brief
+ *   initialize the clock management unit.
+ * @details
+ * start the built in clocks (CMU,GPIO.TIMERs)
+ * enable the interrupt that will eneable the external Xtal
+ * change control register to digital external clock and select the HFXO (!be more specific on the register)
+ * bring the clock on the route 0 pin (!which one?)
+ * @Author A. Le Boyer
+ *****************************************************************************/
 
 void init_CMU(void){
 	/* Use 14 MHZ HFRCO as core clock frequency*/

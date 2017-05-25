@@ -26,17 +26,17 @@
 
 
 typedef struct epsiSetup {
-	uint32_t 	coreClock;       // frequency of the cristal
-	uint32_t 	numSensor;       // number of sensor used. It will always go from 1 to numSensor in the list define in the main
-	uint32_t	maxSamples;      // max number of sample in the dataBuffer. A sample is all the channels data + timestamp if timeStampflag=1
-	uint32_t    pinInterupt;
-	uint32_t	blockSize;
-	uint32_t	sampleFreq;
-	uint32_t    MclockFreq;
-	uint32_t    timer1Sync;
-	uint32_t	spiBaudrate;
-	uint32_t	usartBaudrate;
-	uint32_t	timeStampFlag;
+	uint32_t 	core_clock;             // frequency of the cristal
+	uint32_t 	number_sensor;          // number of sensor used. It will always go from 1 to numSensor in the list define in the main
+	uint32_t	maximum_samples;        // max number of sample in the dataBuffer. A sample is all the channels data + timestamp if timeStampflag=1
+	uint32_t    pinInterupt;            // GPIO used to trigger the sample interrupt.
+	uint32_t	blocksize;              // Is it used ?
+	uint32_t	sample_frequency;       // sample frequency in Hz used in epsilometer_analog.c define_ADC_configuration
+	uint32_t    master_clock_frequency; // frequency in Hz of the clock used by the ADC
+	uint32_t    timer1Sync;             // so far number of cycle of the master clock to trigger TIMER1 which will sync all the ADC togther
+	uint32_t	spi_baudrate;           // baudrate of the spi bus: ADC to MCU communication
+	uint32_t	usart_baudrate;         // baudrate ot the RS232 TX/RX
+	uint32_t	timestamp_flag;         // flag to add a time stamp in with the data
 } epsiSetup, *epsiSetupPtr;
 
 
@@ -61,18 +61,26 @@ typedef struct epsiSetup {
 }
 
 
+// define the name of the file we open on the SD card
 #define FILENAME "ep_test.bin"
 TCHAR filename[256];
 FIL fsrc;					// File objects
 
+
+// define the different state of MADRE (not use in this Application note)
+enum States0 {
+  Sampling,
+  Menu
+};
+enum States0 State;
 
 
 /*************************************************************************/
 /**   define global external values  **********************************************/
 /*************************************************************************/
 
-volatile int32_t byteSample;        // number of bytes per Sample
-volatile uint32_t bufferSize;        // numChannel*maxSamples
+volatile int32_t byte_per_sample;     // number of bytes per Sample
+volatile uint32_t buffer_size;        // numChannel*maxSamples
 
 /*************************************************************************/
 /* define circular buffer for the samples.
@@ -82,19 +90,14 @@ volatile uint32_t bufferSize;        // numChannel*maxSamples
  */
 /*************************************************************************/
 
-//volatile uint8_t * dataBuffer;
-volatile uint8_t * dataBuffer;
-volatile uint8_t * channelSample;
-//extern volatile uint32_t pendingSamples; // counter for samples gathered from the ADC
-//extern volatile uint32_t txSentBytes;
-volatile uint32_t pendingSamples; // counter for samples gathered from the ADC
-volatile uint32_t txSentBytes;
-volatile uint32_t SDblock;              // counter in the foreground SD
-volatile uint32_t flagSync;              // flag to reset pending sample in the interrupt.
-extern epsiSetupPtr boardSetup_ptr;
-volatile uint32_t gulclockset;
+volatile uint8_t * dataBuffer;      // main buffer. reord all the data. Its size is define in MADRE_config
+volatile uint8_t * channelSample;   // ??
+volatile uint32_t pendingSamples;   // counter for samples gathered from the ADC
+volatile uint32_t tx_bytes_sent;    // number of bytes sent
+volatile uint32_t sd_block;         // number of "block" sent on the SD
+volatile uint32_t gulclockset;      // used in the interrupt enabling the HFXO
 
+extern epsiSetupPtr boardSetup_ptr; // default user parameter
 
-//volatile uint32_t samplesSent;           // counter for samples sent by TX
 
 #endif /* EP_COMMON_H_ */

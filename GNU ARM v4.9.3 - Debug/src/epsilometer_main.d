@@ -1,4 +1,10 @@
 src/epsilometer_main.o: ../src/epsilometer_main.c \
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_common.h \
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/ff.h \
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/integer.h \
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/ffconf.h \
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_sampling.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_rtc.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/Device/SiliconLabs/EFM32WG/Include/em_device.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/Device/SiliconLabs/EFM32WG/Include/efm32wg842f256.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/CMSIS/Include/core_cm4.h \
@@ -45,32 +51,39 @@ src/epsilometer_main.o: ../src/epsilometer_main.c \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/Device/SiliconLabs/EFM32WG/Include/efm32wg_dmactrl.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/Device/SiliconLabs/EFM32WG/Include/efm32wg_af_ports.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/Device/SiliconLabs/EFM32WG/Include/efm32wg_af_pins.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_cmu.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_assert.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_bus.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_gpio.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_usart.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_chip.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_system.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_gpio.h \
- /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_rtc.h \
  /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//hardware/kit/common/drivers/microsd.h \
  /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/microsdconfig.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_gpio.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_bus.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_assert.h \
  /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/integer.h \
- /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/ff.h \
- /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/integer.h \
- /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/ffconf.h \
  /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/diskio.h \
  /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_common.h \
  /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_analog.h \
- /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_common.h \
  /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_coms.h \
- /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_coms.h \
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/Calendar/clock_tc.h \
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_SDcard.h \
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_menu.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_cmu.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_chip.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_system.h \
+ /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_gpio.h \
  /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_CMU_init.h \
  /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_GPIO_init.h \
- /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_TIMER_init.h \
- /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_SDcard.h \
- /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/Calendar/clock_tc.h
+ /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_TIMER_init.h
+
+/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_common.h:
+
+/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/ff.h:
+
+/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/integer.h:
+
+/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/ffconf.h:
+
+/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_sampling.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_rtc.h:
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/Device/SiliconLabs/EFM32WG/Include/em_device.h:
 
@@ -164,35 +177,19 @@ src/epsilometer_main.o: ../src/epsilometer_main.c \
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/Device/SiliconLabs/EFM32WG/Include/efm32wg_af_pins.h:
 
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_cmu.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_assert.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_bus.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_gpio.h:
-
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_usart.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_chip.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_system.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_gpio.h:
-
-/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_rtc.h:
 
 /Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//hardware/kit/common/drivers/microsd.h:
 
 /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/microsdconfig.h:
 
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_gpio.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_bus.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_assert.h:
+
 /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/integer.h:
-
-/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/ff.h:
-
-/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/integer.h:
-
-/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/ffconf.h:
 
 /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/FatFS/src/diskio.h:
 
@@ -200,18 +197,24 @@ src/epsilometer_main.o: ../src/epsilometer_main.c \
 
 /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_analog.h:
 
-/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_common.h:
-
 /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_coms.h:
 
-/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_coms.h:
+/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/Calendar/clock_tc.h:
+
+/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_SDcard.h:
+
+/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_menu.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_cmu.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_chip.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_system.h:
+
+/Applications/Simplicity\ Studio.app/Contents/Eclipse/developer/sdks/exx32/v5.0.0.0//platform/emlib/inc/em_gpio.h:
 
 /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_CMU_init.h:
 
 /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_GPIO_init.h:
 
 /Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_TIMER_init.h:
-
-/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/inc/ep_SDcard.h:
-
-/Users/aleboyer/SimplicityStudio/v4_workspace/SDcard_EPSI/Calendar/clock_tc.h:

@@ -13,12 +13,19 @@
 
 
 
-/***************************************************************************//**
- * @brief Set up the USART1 communication port
- * @Detail
- * @return
- * @Note  written by leumas64
-*******************************************************************************/
+/******************************************************************************
+ * @name UART_Setup
+ * @brief
+ *  set up the communication with the RS232
+ * @details
+ *	enable USART1 clock
+ *	switch on the TX and RX GPIO
+ *	configure USART1: baudrate ....
+ *	set up an interrupt to TX the data
+ *	lower the priority of the interrupt so it is lower than tha sampling interrupt
+ *
+ * @Author A. Le Boyer
+ *****************************************************************************/
 
 void UART_Setup() {
 	/*UART1 shit*/
@@ -29,7 +36,7 @@ void UART_Setup() {
 	USART_InitAsync_TypeDef usartInitUSART1 = {
 		.enable = usartDisable, 					// Initially disabled
 		.refFreq = 0,								// configured reference frequency
-		.baudrate = boardSetup_ptr->usartBaudrate, 				    // Baud rate defined in common.h
+		.baudrate = boardSetup_ptr->usart_baudrate, 				    // Baud rate defined in common.h
 		.oversampling = usartOVS16, 				// overSampling rate x16
 		.databits = USART_FRAME_DATABITS_EIGHT, 	// 8-bit frames
 		.parity = USART_FRAME_PARITY_NONE,			// parity - none
@@ -51,43 +58,42 @@ void UART_Setup() {
 }
 
 
-/***************************************************************************//**
- * @brief send 3 bytes through TX
- * @Detail send 3 bytes block when TX buffer (2 bytes for 2 FIFO level + 1 bytes for shift register)
- * @return
- * @Note
-*******************************************************************************/
-
+/******************************************************************************
+ * @name UART_Setup
+ * @brief
+ *  send 3 bytes through TX
+ * @details
+ *	send 3 bytes block when TX buffer (2 bytes for 2 FIFO level + 1 bytes for shift register)
+ *
+ * @Author A. Le Boyer
+ *****************************************************************************/
 
 void USART1_TX_IRQHandler(void)
 {
 //TODO change to state machine
-	dataLen = pendingSamples*byteSample-txSentBytes;
+	dataLen = pendingSamples*byte_per_sample-tx_bytes_sent;
 
 	switch (dataLen){
 		case 0:
 			USART_IntDisable(USART1, USART_IEN_TXBL);
-			GPIO_PinModeSet(gpioPortA, 14, gpioModePushPull, 1); //
 			USART_Tx(USART1, 0x1e);
-			GPIO_PinModeSet(gpioPortA, 14, gpioModePushPull, 0); //
 
 			break;
 		case 1:
-			USART_Tx(USART1, dataBuffer[txSentBytes % bufferSize]);
-			txSentBytes++;
+			USART_Tx(USART1, dataBuffer[tx_bytes_sent % buffer_size]);
+			tx_bytes_sent++;
 			break;
 		default:
-		    GPIO_PinModeSet(gpioPortA, 13, gpioModePushPull, 1); //
 			for(int i=0;i<2;i++){
 				/* Transmit pending character */
-				USART_Tx(USART1, dataBuffer[txSentBytes % bufferSize]);
-				txSentBytes++;
+				USART_Tx(USART1, dataBuffer[tx_bytes_sent % buffer_size]);
+				tx_bytes_sent++;
 			}
-		    GPIO_PinModeSet(gpioPortA, 13, gpioModePushPull, 0); //
 			break;
 	}
 
 }
+
 
 
 
