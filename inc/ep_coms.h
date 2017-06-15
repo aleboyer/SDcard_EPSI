@@ -21,6 +21,6 @@ uint32_t dataLen;
 
 void UART_Setup();
 void uartPutData();
-
+void send_sdupdate();
 
 #endif /* EP_COMS_H_ */

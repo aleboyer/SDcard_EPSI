@@ -94,6 +94,30 @@ void USART1_TX_IRQHandler(void)
 
 }
 
+/******************************************************************************
+ * @name send_sdupdate
+ * @brief
+ *  send nb of samples saved
+ * @details
+ *
+ *
+ * @Author A. Le Boyer
+ *****************************************************************************/
+
+void send_sdupdate(void)
+{
+	char str[80];
+	char *e;
+	sprintf(str, "Storing %i th block \n",(int) sd_block);
+//	sprintf(str, "Hello World \n");
+    //uint8_t A[12];
+	int index;
+	e = strchr(str, '\n');
+	index = (int)(e - str);
+	for (int i=0;i<index+1;i++){
+		USART_Tx(USART1, str[i]);
+	}
+}
 
 
 

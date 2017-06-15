@@ -16,6 +16,8 @@
 
 #include "stdint.h"
 #include "stdlib.h"
+#include "stdio.h"
+#include "string.h"
 #include "ff.h"
 
 /*************************************************************************/
@@ -56,10 +58,10 @@ typedef struct epsiSetup {
 614400,                          \
 0x13,                            \
 1000000,                         \
-460800,                          \
+57600,                           \
 1                                \
 }
-
+//default TX baud  460800
 
 // define the name of the file we open on the SD card
 #define FILENAME "ep_test.bin"
