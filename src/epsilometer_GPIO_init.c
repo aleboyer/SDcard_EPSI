@@ -25,6 +25,7 @@ void init_GPIO(void) {
 	GPIO_PinModeSet(gpioPortF, 4, gpioModePushPull, 0); // Enable 485 Receiver power
 	GPIO_PinModeSet(gpioPortF, 5, gpioModePushPull, 1); // Enable 485 Transmitter
 	GPIO_PinModeSet(gpioPortA, 2, gpioModePushPull, 1); // PA2 in output mode to send the MCLOCK  to ADC
+	GPIO_PinModeSet(gpioPortA, 12, gpioModePushPull, 1); // put the voltage regulator to high
 	GPIO_PinModeSet(gpioPortB, 7, gpioModePushPull, 1);   // PB7 in output mode to send the SYNC away
 
 	GPIO_PinModeSet(gpioPortE, 12, gpioModePushPull, 1); // SD CLC	K

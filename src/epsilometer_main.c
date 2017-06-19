@@ -65,7 +65,7 @@ int main(void) {
 		switch (State){
 			case Sampling:
 				MADRE_Sampling();
-				State=poll_RX();
+				//State=poll_RX();
 				break;
 			case Menu:
 				MADRE_menu();

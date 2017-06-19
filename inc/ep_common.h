@@ -51,14 +51,14 @@ typedef struct epsiSetup {
 #define EPSI_SETUP_DEFAULT       \
 {20000000,                       \
 8,                               \
-320,                             \
+640,                             \
 0x200,                           \
 1,                               \
 60,                              \
 614400,                          \
 0x13,                            \
 1000000,                         \
-57600,                           \
+460800,                           \
 1                                \
 }
 //default TX baud  460800

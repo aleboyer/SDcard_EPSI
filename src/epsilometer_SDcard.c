@@ -109,8 +109,8 @@ void initSD(void){
 
 void writeSD(){
 	SDwritten = 0;
-//TODO change the hard coded values (2240 and 4) into variable
-    f_write(&fsrc, dataBuffer+(2240*(sd_block%4) % buffer_size),2240, &SDwritten);
+//TODO change the hard coded values (2240) into variable
+    f_write(&fsrc, dataBuffer+(2240*sd_block % buffer_size),2240, &SDwritten);
 
 }
 

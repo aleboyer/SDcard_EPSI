@@ -158,8 +158,8 @@ void define_ADC_configuration(void){
 	Set_Value_16Bit_Register(&COMMON_SETUP.ADC_CONTROL, AD7124_CTRL_CLKSEL_EXT, AD7124_CTRL_CLKSEL_NUM_BITS, AD7124_CTRL_CLKSEL_START_POSITION);
 
 	//TODO change to a Common parameter
-	COMMON_SETUP.FILTER_0 = 0x06001E; // 0x1E for 640hz on sinc4 filter
-	//COMMON_SETUP.FILTER_0 = 0x06003C; // 0x3C for 320hz on sinc4 filter
+	//COMMON_SETUP.FILTER_0 = 0x06001E; // 0x1E for 640hz on sinc4 filter
+	COMMON_SETUP.FILTER_0 = 0x06003C; // 0x3C for 320hz on sinc4 filter
 
 	AD7124 TEMP_SETUP = COMMON_SETUP;
 	Set_Value_16Bit_Register(&TEMP_SETUP.CHANNEL_0, AD7124_CH_ENABLE, AD7124_CH_EN_NUM_BITS, AD7124_CH_EN_START_POSITION);
@@ -464,7 +464,8 @@ void GPIO_ODD_IRQHandler(void) {
 		for(int ii = 0; ii < 3; ii++) {
 			dataBuffer[(pendingSamples*byte_per_sample+i*3+ii) % buffer_size] = USART_SpiTransfer(USART0, 0x0);
 			if (i==4){
-				count=pendingSamples % 500;
+//				count=pendingSamples % 500;
+				count=pendingSamples;
 				count_ptr=(uint8_t*) &count;
 				// make a fake signal on shear 1
 				dataBuffer[(pendingSamples*byte_per_sample+i*3+ii) % buffer_size] = count_ptr[2-ii];
@@ -492,7 +493,7 @@ void GPIO_ODD_IRQHandler(void) {
 	AD7124_ChipSelect(sensors[0], LLO); // Select Master to Monitor DRDY pin
 
 	// enable the TX interrupt based on the buffer level
-	//USART_IntEnable(USART1, UART_IEN_TXBL);
+	USART_IntEnable(USART1, UART_IEN_TXBL);
 
 //TODO stream out the data ?
 	GPIO_IntClear(boardSetup_ptr->pinInterupt);
