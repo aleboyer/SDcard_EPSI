@@ -476,7 +476,7 @@ void GPIO_ODD_IRQHandler(void) {
     }//end for
 
 	if (boardSetup_ptr->timestamp_flag){
-// TODO define a real time stamp
+// TODO define a real time stamp. Define as uint32 but the register is a 24 bits register (check EFM32 datasheet)
 		uint32_t timeStamp = RTC->CNT;
 		//for (int i=0;i<4;i++){
 		//	dataBuffer[(pendingSamples*byteSample+(boardSetup_ptr->numSensor-1)*3+i+1) % bufferSize] =  timeStamp_ptr[i];
@@ -484,7 +484,7 @@ void GPIO_ODD_IRQHandler(void) {
         dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+0) % buffer_size]= (timeStamp& 0x000000ff);
         dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+1) % buffer_size]= (timeStamp& 0x0000ff00)>>8;
         dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+2) % buffer_size]= (timeStamp& 0x00ff0000)>>16;
-        dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+3) % buffer_size]= (timeStamp& 0xff000000)>>24;
+        //dataBuffer[(pendingSamples*byte_per_sample+(boardSetup_ptr->number_sensor)*3+3) % buffer_size]= (timeStamp& 0xff000000)>>24;
 
 	}
 	pendingSamples++; // Increment number of samples available

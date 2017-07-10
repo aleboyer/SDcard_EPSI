@@ -29,7 +29,9 @@ volatile bool doTemperatureCompensation = true;         // Flags that signal whe
 
 void MADRE_Sampling() {
 	if((pendingSamples % 80 ==0) & (pendingSamples>0)){
+		GPIO_PinModeSet(gpioPortA, 13, gpioModePushPull, 1); // and the ADA2200 amp or conductivity sensor
 		writeSD();
+		GPIO_PinModeSet(gpioPortA, 13, gpioModePushPull, 0); // and the ADA2200 amp or conductivity sensor
 		sd_block++;
 		if (sd_block % 100 == 0 ) {
 			GPIO_PinModeSet(gpioPortA, 14, gpioModePushPull, 1); // and the ADA2200 amp or conductivity sensor
